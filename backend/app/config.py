@@ -27,8 +27,8 @@ class Settings(BaseSettings):
         "http://localhost:8000",      # FastAPI docs
     ]
     
-    # Database
-    DATABASE_URL: str = "postgresql+asyncpg://user:password@localhost:5432/crypto_tracker"
+    # Database (SQLite for local dev, PostgreSQL for production)
+    DATABASE_URL: str = "sqlite+aiosqlite:///./crypto_tracker.db"
     
     # Redis
     REDIS_URL: str = "redis://localhost:6379/0"
@@ -50,6 +50,7 @@ class Settings(BaseSettings):
         env_file = ".env"
         env_file_encoding = "utf-8"
         case_sensitive = True
+        extra = "ignore"  # Ignore unknown env vars
 
 
 # Create a global settings instance
