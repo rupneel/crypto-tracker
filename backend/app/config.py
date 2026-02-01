@@ -5,8 +5,8 @@ Application configuration using Pydantic Settings.
 Loads environment variables from .env file.
 """
 
-from typing import List, Any
-from pydantic import field_validator
+from typing import List, Union, Any
+from pydantic import field_validator, AnyHttpUrl
 from pydantic_settings import BaseSettings
 
 
@@ -22,7 +22,7 @@ class Settings(BaseSettings):
     PORT: int = 8000
     
     # CORS
-    CORS_ORIGINS: Any = [
+    CORS_ORIGINS: Union[List[str], str] = [
         "http://localhost:3000",      # Next.js dev server
         "http://127.0.0.1:3000",
         "http://localhost:8000",      # FastAPI docs
@@ -30,10 +30,12 @@ class Settings(BaseSettings):
 
     @field_validator("CORS_ORIGINS", mode="before")
     @classmethod
-    def parse_cors_origins(cls, v):
-        if isinstance(v, str) and not v.strip().startswith("["):
-            return [origin.strip() for origin in v.split(",")]
-        return v
+    def parse_cors_origins(cls, v: Any) -> Union[List[str], str]:
+        if isinstance(v, str) and not v.startswith("["):
+            return [i.strip() for i in v.split(",")]
+        elif isinstance(v, (list, str)):
+            return v
+        raise ValueError(v)
     
     # Database (SQLite for local dev, PostgreSQL for production)
     DATABASE_URL: str = "sqlite+aiosqlite:///./crypto_tracker.db"
