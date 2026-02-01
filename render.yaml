@@ -1,0 +1,19 @@
+# Render Blueprint for Crypto Tracker Backend
+# This file enables one-click deployment to Render
+
+services:
+  - type: web
+    name: crypto-tracker-api
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11"
+      - key: DATABASE_URL
+        value: sqlite+aiosqlite:///./crypto_tracker.db
+      - key: DEBUG
+        value: "false"
+      - key: CORS_ORIGINS
+        sync: false  # Set manually in dashboard
