@@ -6,16 +6,43 @@
  * Paginated list of cryptocurrencies with search and filters
  */
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { cryptoApi } from '@/lib/api';
 import { formatCurrency, formatPercentage, formatNumber, getPriceChangeClass, debounce } from '@/lib/utils';
 import styles from './page.module.css';
 
+// Main export wrapped in Suspense for useSearchParams
 export default function CryptosPage() {
+    return (
+        <Suspense fallback={<CryptosLoading />}>
+            <CryptosContent />
+        </Suspense>
+    );
+}
+
+// Loading fallback
+function CryptosLoading() {
+    return (
+        <div className={styles.cryptosPage}>
+            <div className={styles.pageHeader}>
+                <div className={styles.headerContent}>
+                    <div className="skeleton" style={{ width: 200, height: 32, marginBottom: 8 }} />
+                    <div className="skeleton" style={{ width: 300, height: 16 }} />
+                </div>
+            </div>
+            <div className={styles.tableContainer}>
+                <div className="skeleton" style={{ height: 500 }} />
+            </div>
+        </div>
+    );
+}
+
+// Actual content component
+function CryptosContent() {
     const searchParams = useSearchParams();
-    const initialSearch = searchParams.get('search') || '';
+    const initialSearch = searchParams?.get('search') || '';
 
     const [cryptos, setCryptos] = useState([]);
     const [loading, setLoading] = useState(true);
