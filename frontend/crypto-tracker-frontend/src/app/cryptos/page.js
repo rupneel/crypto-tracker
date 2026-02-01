@@ -13,6 +13,9 @@ import { cryptoApi } from '@/lib/api';
 import { formatCurrency, formatPercentage, formatNumber, getPriceChangeClass, debounce } from '@/lib/utils';
 import styles from './page.module.css';
 
+// Force dynamic rendering - skip static prerendering
+export const dynamic = 'force-dynamic';
+
 // Main export wrapped in Suspense for useSearchParams
 export default function CryptosPage() {
     return (

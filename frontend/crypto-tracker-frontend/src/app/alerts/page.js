@@ -11,6 +11,9 @@ import { cryptoApi } from '@/lib/api';
 import { formatCurrency, formatDate } from '@/lib/utils';
 import styles from './page.module.css';
 
+// Force dynamic rendering - skip static prerendering
+export const dynamic = 'force-dynamic';
+
 export default function AlertsPage() {
     const [alerts, setAlerts] = useState([]);
     const [loading, setLoading] = useState(true);

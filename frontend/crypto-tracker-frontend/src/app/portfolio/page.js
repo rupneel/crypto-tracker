@@ -13,6 +13,9 @@ import { portfolioApi, cryptoApi } from '@/lib/api';
 import { formatCurrency, formatPercentage, formatNumber, getPriceChangeClass, getChartColor } from '@/lib/utils';
 import styles from './page.module.css';
 
+// Force dynamic rendering - skip static prerendering
+export const dynamic = 'force-dynamic';
+
 export default function PortfolioPage() {
     const [portfolio, setPortfolio] = useState(null);
     const [holdings, setHoldings] = useState([]);
