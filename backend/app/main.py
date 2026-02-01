@@ -48,9 +48,12 @@ async def health_check():
     }
 
 
-# Import and include routers (will be added as we build them)
-# from app.api.routes import crypto, portfolio, alerts, auth
-# app.include_router(crypto.router, prefix="/api/v1/cryptos", tags=["Cryptocurrencies"])
+# Import and include routers
+from app.api.routes import crypto
+app.include_router(crypto.router, prefix="/api/v1/cryptos", tags=["Cryptocurrencies"])
+
+# TODO: Enable additional routers as they are implemented
+# from app.api.routes import portfolio, alerts, auth
 # app.include_router(portfolio.router, prefix="/api/v1/portfolio", tags=["Portfolio"])
 # app.include_router(alerts.router, prefix="/api/v1/alerts", tags=["Alerts"])
 # app.include_router(auth.router, prefix="/api/v1/auth", tags=["Authentication"])
