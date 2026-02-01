@@ -26,6 +26,7 @@ class Settings(BaseSettings):
         "http://localhost:3000",      # Next.js dev server
         "http://127.0.0.1:3000",
         "http://localhost:8000",      # FastAPI docs
+        "https://crypto-tracker-frontend-phi.vercel.app",
     ]
 
     @field_validator("CORS_ORIGINS", mode="before")
