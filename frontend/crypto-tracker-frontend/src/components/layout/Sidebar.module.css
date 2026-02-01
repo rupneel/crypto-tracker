@@ -24,10 +24,10 @@
 /* Collapse Button */
 .collapseBtn {
     position: absolute;
-    top: var(--space-4);
-    right: calc(-12px);
-    width: 24px;
-    height: 24px;
+    top: var(--space-5);
+    right: -14px;
+    width: 28px;
+    height: 28px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -36,21 +36,26 @@
     border-radius: var(--radius-full);
     cursor: pointer;
     transition: all var(--transition-fast);
+    z-index: 10;
+    box-shadow: var(--shadow-sm);
 }
 
 .collapseBtn svg {
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
     color: var(--text-muted);
+    flex-shrink: 0;
+    display: block;
 }
 
 .collapseBtn:hover {
     background: var(--surface-elevated);
-    border-color: var(--border-hover);
+    border-color: var(--primary-400);
+    box-shadow: var(--shadow-md);
 }
 
 .collapseBtn:hover svg {
-    color: var(--text-primary);
+    color: var(--primary-500);
 }
 
 /* Navigation */
