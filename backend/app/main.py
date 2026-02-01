@@ -4,7 +4,8 @@ Crypto Tracker Backend - FastAPI Application
 Main entry point for the FastAPI application.
 """
 
-from fastapi import FastAPI
+from uuid import uuid4
+from fastapi import FastAPI, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
@@ -57,3 +58,20 @@ app.include_router(portfolio.router, prefix="/api/v1/portfolio", tags=["Portfoli
 # from app.api.routes import alerts, auth
 # app.include_router(alerts.router, prefix="/api/v1/alerts", tags=["Alerts"])
 # app.include_router(auth.router, prefix="/api/v1/auth", tags=["Authentication"])
+
+
+# WebSocket endpoint for real-time price updates
+from app.api.websocket import websocket_endpoint
+
+@app.websocket("/ws/{client_id}")
+async def websocket_route(websocket: WebSocket, client_id: str):
+    """WebSocket endpoint for real-time cryptocurrency price updates."""
+    await websocket_endpoint(websocket, client_id)
+
+
+@app.websocket("/ws")
+async def websocket_route_auto_id(websocket: WebSocket):
+    """WebSocket endpoint with auto-generated client ID."""
+    client_id = str(uuid4())
+    await websocket_endpoint(websocket, client_id)
+
